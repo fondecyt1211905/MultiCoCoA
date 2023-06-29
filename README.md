@@ -1,8 +1,10 @@
-# MultiCoCoA: Un Framework para Análisis Multimodal
+# MultiCoCoA: Multimodal Data Collector from Collocated Collaborative Activities
 
 ## Description
 
 It is a framework for multimodal analytics to facilitate data collection in collaborative activities. Efficiency and innovation in modern teams require conflict management skills and the creation of an inclusive environment, which are an integral part of workplace education and training. However, differences of opinion, lack of effective communication and other factors can generate interpersonal conflicts. To manage them, it is essential to develop and apply soft skills that can influence the formation of social, emotional and professional skills. MultiCoCoA, which uses machine learning techniques to analyze audio and video data, can help identify areas for improvement in communication and adjust behavior accordingly. The system is intuitive, allows data to be uploaded and analyzed, and presents the results in downloadable CSV files. The authors hope that MultiCoCoA will drive research in the field of communication and facilitate more effective practices in collaborative environments.
+
+![Example of activity](./img/experiment.jpg "Example of activity")
 
 ## Prerequisites
 
@@ -49,9 +51,13 @@ docker-compose up -d
 
 Upon completion of these steps, you should have the entire system deployed and running.
 
+![Application architecture.](./img/frontend-backend.png "Application architecture.")
+
 ## Uso
 
 Once the system is deployed, you can access it from your web browser by entering the URL `front.localhost`.
+
+![Examples of results](./img/output.png "Examples of results")
 
 ## Contribution
 
