@@ -1,0 +1,113 @@
+version: "3"
+services:
+  # userrecognition
+  userrecognition:
+    container_name: userrecognition
+    build:
+      context: .
+      dockerfile: ./pipelinevideo/userrecognition/Dockerfile
+    volumes:
+      - deepface:/root/.deepface/weights/
+    networks:
+      - red-internal
+    external_links:
+      - mmla-rabbitmq
+    environment:
+      - RABBITMQ_HOST=mmla-rabbitmq
+      - PV_DETECTOR_NAME=retinaface
+
+  #facedirection
+  facedirection:
+    container_name: facedirection
+    build:
+      context: .
+      dockerfile: ./pipelinevideo/facedirection/Dockerfile
+    volumes:
+      - deepface:/root/.deepface/weights/
+    networks:
+      - red-internal
+    external_links:
+      - mmla-rabbitmq
+    environment:
+      - RABBITMQ_HOST=mmla-rabbitmq
+
+  # lookinghead
+  lookinghead:
+    container_name: lookinghead
+    build:
+      context: .
+      dockerfile: ./pipelinevideo/lookinghead/Dockerfile
+    volumes:
+      - deepface:/root/.deepface/weights/
+    networks:
+      - red-internal
+    external_links:
+      - mmla-rabbitmq
+    environment:
+      - RABBITMQ_HOST=mmla-rabbitmq
+
+  emotion:
+    container_name: emotion
+    build:
+      context: .
+      dockerfile: ./pipelinevideo/emotion/Dockerfile
+    volumes:
+      - deepface:/root/.deepface/weights/
+    networks:
+      - red-internal
+    external_links:
+      - mmla-rabbitmq
+    environment:
+      - RABBITMQ_HOST=mmla-rabbitmq     
+
+volumes:
+  deepface:
+
+networks:
+  red-internal:
+    external: 
+      name: mmla-network
+
+  # #facedirection
+  # facedirection:
+  #   container_name: facedirection
+  #   build:
+  #     context: .
+  #     dockerfile: ./facedirection/Dockerfile
+  #   networks:
+  #     - red-proxy
+  #   environment:
+  #     - RABBITMQ_HOST=10.100.6.14 
+  
+  # #lookinghead
+  # lookinghead:
+  #   container_name: lookinghead
+  #   build:
+  #     context: .
+  #     dockerfile: ./lookinghead/Dockerfile
+  #   networks:
+  #     - red-proxy
+  #   environment:
+  #     - RABBITMQ_HOST=10.100.6.14 
+  
+  # #pose
+  # pose:
+  #   container_name: pose
+  #   build:
+  #     context: .
+  #     dockerfile: ./pose/Dockerfile
+  #   networks:
+  #     - red-proxy
+  #   environment:
+  #     - RABBITMQ_HOST=10.100.6.14 
+
+  # #hands
+  # hands:
+  #   container_name: hands
+  #   build:
+  #     context: .
+  #     dockerfile: ./hands/Dockerfile
+  #   networks:
+  #     - red-proxy
+  #   environment:
+  #     - RABBITMQ_HOST=10.100.6.14 

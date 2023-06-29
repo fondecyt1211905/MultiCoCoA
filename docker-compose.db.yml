@@ -1,0 +1,35 @@
+version: "3"
+services:
+  mmla-rabbitmq:
+    image: rabbitmq:3.11-management-alpine
+    container_name: 'mmla-rabbitmq'
+    restart: always
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      -  mmla-data_rabbitmq:/var/lib/rabbitmq/
+    networks:
+      - red-internal
+
+  mmla-mongo:
+    image: mongo
+    container_name: 'mmla-mongo'
+    restart: always
+    ports:
+      - "27018:27017"
+    expose:
+      - "27017"
+    volumes:
+      - mmla-data_mongo:/data/db
+    networks:
+      - red-internal
+
+networks:
+  red-internal:
+    external:
+      name: mmla-network
+
+volumes:
+  mmla-data_mongo:
+  mmla-data_rabbitmq:

@@ -1,0 +1,55 @@
+version: "3"
+services:
+  mmla-api:
+    image: mmla-api
+    container_name: 'mmla-api'
+    restart: always
+    expose:
+      - 80
+    build:
+      context: server/api
+      dockerfile: Dockerfile
+    networks:
+      - red-proxy
+      - red-internal
+    environment:
+      - API_HOST=0.0.0.0
+      - API_PORT=80
+      - API_MODE=False
+      - RABBITMQ_HOST=mmla-rabbitmq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USER=guest
+      - RABBITMQ_PASSWORD=guest
+      - RABBITMQ_TIMEOUT=20
+      - MONGO_HOST=mmla-mongo
+      - MONGO_PORT=27017
+      - MONGO_DB=virtualDevice
+      - VIRTUAL_HOST=api.localhost
+    volumes:
+      - mmla-data_api:/app/data
+
+  mmla-frontend:
+    container_name: 'mmla-frontend'
+    build:
+      context: apps/
+      dockerfile: ./frontend/Dockerfile
+    restart: always
+    expose:
+        - 80
+    networks:
+        - red-proxy
+    environment:
+      - VIRTUAL_HOST=front.localhost
+      - REACT_APP_BASE_URL=http://api.localhost
+      - PORT=80
+
+networks:
+  red-proxy:
+    external: 
+      name: network-docker
+  red-internal:
+    external:
+      name: mmla-network
+
+volumes:
+  mmla-data_api:

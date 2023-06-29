@@ -1,0 +1,22 @@
+# python
+__pycache__/
+*.pyc
+
+#node
+**/node_modules
+/.pnp
+.pnp.js
+/coverage
+/build
+
+# testing
+**/*.mp4
+**/*.wav
+*/_*
+**/*.csv
+
+#rabbitmq
+*.rabbitmq
+
+/apps/virtualDevice/backend/analysis/*
+

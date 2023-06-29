@@ -1,0 +1,101 @@
+version: "3"
+services:
+  8to6wav:
+    container_name: 8to6wav
+    build:
+      context: .
+      dockerfile: ./pipelineaudio/8to6wav/Dockerfile
+    networks:
+        - red-internal
+    external_links:
+        - mmla-rabbitmq
+    environment:
+        - RABBITMQ_HOST=mmla-rabbitmq
+  vad:
+    container_name: vad
+    build:
+      context: .
+      dockerfile: ./pipelineaudio/vad/Dockerfile
+    networks:
+        - red-internal
+    external_links:
+        - mmla-rabbitmq
+    environment:
+        - RABBITMQ_HOST=mmla-rabbitmq
+
+  doa:
+    container_name: doa
+    build:
+      context: .
+      dockerfile: ./pipelineaudio/doa/Dockerfile
+    networks:
+        - red-internal
+    external_links:
+        - mmla-rabbitmq
+    environment:
+        - RABBITMQ_HOST=mmla-rabbitmq
+
+  filter-doa:
+    container_name: filter-doa
+    build:
+      context: .
+      dockerfile: ./pipelineaudio/filter-doa/Dockerfile
+    networks:
+        - red-internal
+    external_links:
+        - mmla-rabbitmq
+    environment:
+        - RABBITMQ_HOST=mmla-rabbitmq
+
+  segmentator:
+    container_name: segmentator
+    build:
+      context: .
+      dockerfile: ./pipelineaudio/segmentator/Dockerfile
+    networks:
+        - red-internal
+    external_links:
+        - mmla-rabbitmq
+    environment:
+        - RABBITMQ_HOST=mmla-rabbitmq
+
+  transcriptor:
+    container_name: transcriptor
+    build:
+      context: .
+      dockerfile: ./pipelineaudio/transcriptor/Dockerfile
+    networks:
+        - red-internal
+    external_links:
+        - mmla-rabbitmq
+    environment:
+        - RABBITMQ_HOST=mmla-rabbitmq
+
+  nlp:
+    container_name: nlp
+    build:
+      context: .
+      dockerfile: ./pipelineaudio/nlp/Dockerfile
+    networks:
+        - red-internal
+    external_links:
+        - mmla-rabbitmq
+    environment:
+        - RABBITMQ_HOST=mmla-rabbitmq
+
+  apm:
+    container_name: apm
+    build:
+      context: .
+      dockerfile: ./pipelineaudio/apm/Dockerfile
+    networks:
+        - red-internal
+    external_links:
+        - mmla-rabbitmq
+    environment:
+        - RABBITMQ_HOST=mmla-rabbitmq
+
+networks:
+  red-internal:
+    external: 
+      name: mmla-network

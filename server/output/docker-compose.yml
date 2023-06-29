@@ -1,0 +1,76 @@
+version: "3"
+services:
+  apm_db:
+    container_name: apm_db
+    build:
+      context: .
+      dockerfile: ./apm_db/Dockerfile
+    networks:
+        - red-internal
+    external_links:
+        - mmla-rabbitmq
+        - mmla-api
+    environment:
+        - RABBITMQ_HOST=mmla-rabbitmq
+        - HOST_BACKEND=mmla-api
+  
+  vad-doa_db:
+    container_name: vad-doa_db
+    build:
+      context: .
+      dockerfile: ./vad-doa_db/Dockerfile
+    networks:
+        - red-internal
+    external_links:
+        - mmla-rabbitmq
+        - mmla-api
+    environment:
+        - RABBITMQ_HOST=mmla-rabbitmq
+        - HOST_BACKEND=mmla-api
+
+  nlp_db:
+    container_name: nlp_db
+    build:
+      context: .
+      dockerfile: ./nlp_db/Dockerfile
+    networks:
+        - red-internal
+    external_links:
+        - mmla-rabbitmq
+        - mmla-api
+    environment:
+        - RABBITMQ_HOST=mmla-rabbitmq
+        - HOST_BACKEND=mmla-api
+      
+  segmentation_db:
+    container_name: segmentation_db
+    build:
+      context: .
+      dockerfile: ./segmentation_db/Dockerfile
+    networks:
+        - red-internal
+    external_links:
+        - mmla-rabbitmq
+        - mmla-api
+    environment:
+        - RABBITMQ_HOST=mmla-rabbitmq
+        - HOST_BACKEND=mmla-api
+
+  video_db:
+    container_name: video_db
+    build:
+      context: .
+      dockerfile: ./video_db/Dockerfile
+    networks:
+        - red-internal
+    external_links:
+        - mmla-rabbitmq
+        - mmla-api
+    environment:
+        - RABBITMQ_HOST=mmla-rabbitmq
+        - HOST_BACKEND=mmla-api
+  
+networks:
+  red-internal:
+    external: 
+      name: mmla-network
