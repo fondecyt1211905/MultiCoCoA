@@ -1,8 +1,8 @@
-# Descripcion de archivos CSV
+# Description of CSV files
 
-A continuacion se describiran la estructuras y metricas que entregados por el sistema.
+The following is a description of the structures and metrics provided by the system.
 
-## Índice
+## Index
 
 - [Vad Doa](#vad-doa)
 - [Segmentation](#segmentation)
