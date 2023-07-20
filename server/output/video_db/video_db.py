@@ -22,14 +22,14 @@ def video_output():
             return
         datos = json.loads(body)
         datos.pop("data")
-        #print(datos, flush=True)
+        print(datos, flush=True)
         features = {
             "position": datos["position"],
             "users": datos["users"],
         }
         helpers.send_post(
             host=config.CONFIG["host_backend"],
-            nameIndicator="video_output",
+            nameIndicator="head_sight",
             data= helpers.indicator_measure(id_analysis=datos.get("id_device"),measures=features,start_time=datos.get("time"),end_time=datos.get("time"))
         )
     try:

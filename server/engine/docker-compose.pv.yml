@@ -46,19 +46,19 @@ services:
     environment:
       - RABBITMQ_HOST=mmla-rabbitmq
 
-  emotion:
-    container_name: emotion
-    build:
-      context: .
-      dockerfile: ./pipelinevideo/emotion/Dockerfile
-    volumes:
-      - deepface:/root/.deepface/weights/
-    networks:
-      - red-internal
-    external_links:
-      - mmla-rabbitmq
-    environment:
-      - RABBITMQ_HOST=mmla-rabbitmq     
+  # emotion:
+  #   container_name: emotion
+  #   build:
+  #     context: .
+  #     dockerfile: ./pipelinevideo/emotion/Dockerfile
+  #   volumes:
+  #     - deepface:/root/.deepface/weights/
+  #   networks:
+  #     - red-internal
+  #   external_links:
+  #     - mmla-rabbitmq
+  #   environment:
+  #     - RABBITMQ_HOST=mmla-rabbitmq     
 
 volumes:
   deepface:

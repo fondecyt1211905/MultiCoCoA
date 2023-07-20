@@ -6,8 +6,8 @@ CONFIG = {
     "api_debug": (os.getenv("API_MODE", default='True') == 'True'),
 
     # Connection with mongoDB
-    "mongo_host": str(os.getenv("MONGO_HOST", default="10.100.6.14")),
-    "mongo_port": int(os.getenv("MONGO_PORT", default=27017)),
+    "mongo_host": str(os.getenv("MONGO_HOST", default="localhost")),
+    "mongo_port": int(os.getenv("MONGO_PORT", default=27018)),
     "mongo_db": str(os.getenv("MONGO_DB", default="virtualDevice")),
 
     # Define config system pipeline audio
@@ -20,7 +20,7 @@ CONFIG = {
     "pv_format_byte": str(os.getenv("PV_FORMAT", default="ISO-8859-1")),
 
     # Connection with rabbitMQ
-    "rabbitmq_host": str(os.getenv("RABBITMQ_HOST", default="10.100.6.14")),
+    "rabbitmq_host": str(os.getenv("RABBITMQ_HOST", default="localhost")),
     "rabbitmq_port": str(os.getenv("RABBITMQ_PORT", default=5672)),
     "rabbitmq_user": str(os.getenv("RABBITMQ_USER", default='guest')),
     "rabbitmq_password": str(os.getenv("RABBITMQ_PASSWORD", default='guest')),

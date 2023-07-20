@@ -15,8 +15,8 @@ users_data={}
 exchange_in = conf["Exch_in_lookingdirection"]
 type_exchange_in = conf["type_exchange_direct"]
 queue_in = conf["Q_lookingdirection"]
-exchange_out = conf["Exch_emotion"]
-queue_out = conf["Q_emotion"]
+exchange_out = conf["Exch_video_out"]
+queue_out = conf["Q_video_out"]
 
 radio = conf["pv_radio"]
 

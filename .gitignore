@@ -20,3 +20,4 @@ __pycache__/
 
 /apps/virtualDevice/backend/analysis/*
 
+/legacy

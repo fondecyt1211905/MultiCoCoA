@@ -1,4 +1,5 @@
-from flask import Flask
+from flask import Flask, send_file
+from PIL import Image
 import utils.config as config
 from flask_cors import CORS
 from flasgger import Swagger
@@ -9,6 +10,7 @@ from controllers.activities import create_activity, get_activities, get_activity
 from controllers.analysis import create_analysis, get_analysis, get_analysis_by_id, delete_analysis
 from controllers.results import get_results
 from controllers.indicator import create_indicator_measure, get_indicator_measure, download_indicator_measure_csv
+from controllers.charts import get_chart_segmentation, get_chart_vocal_activity, get_chart_apm, get_chart_head_sight, get_chart_graph
 # config
 data = config.CONFIG
 
@@ -291,6 +293,20 @@ def download_indicator_measure_csv_route(indicator_name, id_analysis):
     """
     return download_indicator_measure_csv(indicator_name, id_analysis)
 
+# charts
+@app.route('/chart/<string:chart_name>/<string:id_analysis>/', methods=['GET'])
+@cross_origin()
+def get_chart1_route(chart_name, id_analysis):
+    if chart_name == "chart1":
+      return get_chart_segmentation(id_analysis)  
+    elif chart_name == "chart2":
+      return get_chart_vocal_activity(id_analysis)  
+    elif chart_name == "chart3":
+      return get_chart_apm(id_analysis)  
+    elif chart_name == "chart4":
+      return get_chart_head_sight(id_analysis)
+    elif chart_name == "chart5":
+      return get_chart_graph(id_analysis)
 
 # run server
 @app.route('/')

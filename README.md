@@ -57,7 +57,11 @@ Upon completion of these steps, you should have the entire system deployed and r
 
 Once the system is deployed, you can access it from your web browser by entering the URL `front.localhost`.
 
-![Examples of results](./img/output.png "Examples of results")
+![Examples of results](./img/view.png "Examples of results")
+
+## Document
+
+Description of [output CSV](./doc/output.md) features.
 
 ## Contribution
 

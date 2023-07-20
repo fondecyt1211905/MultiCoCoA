@@ -82,11 +82,8 @@ const ModalAnalyzeActivity = (props) => {
         .then((result) => {
           console.log(result);
           setSpinner(true);
-          if (result.data.id_process){
-            navigate("/results/" + result.data.id_process);
-          }else{
-            alert("No se pudo iniciar el proceso de analisis"); 
-          }
+          alert("Analysis started successfully");
+          props.setShowModal(false)
         })
         .catch((err) => {
           setSpinner(true);

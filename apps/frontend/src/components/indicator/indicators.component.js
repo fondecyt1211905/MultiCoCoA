@@ -7,6 +7,7 @@ import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import IndicatorRow from "./indicatorRow.component";
 import analysisService from "../../services/analysis.service";
+import Display from "../charts/display.component";
 
 export default function Results(props){
     let { id_analysis } = useParams();
@@ -32,7 +33,21 @@ export default function Results(props){
 
     }, []);
 
-    const DataElements = () => {
+
+    const chartElements = () => {
+        const url = [
+            {"url": "/chart/chart1/" + id_analysis},
+            {"url": "/chart/chart2/" + id_analysis},
+            {"url": "/chart/chart3/" + id_analysis},
+            {"url": "/chart/chart4/" + id_analysis},
+            {"url": "/chart/chart5/" + id_analysis}
+        ];
+        return url.map((res, i) => {
+            return <Display obj={res} key={i}/>;
+        });
+    };
+
+    const DownloadElements = () => {
         if (indicators) {
             return indicators.map((res, i) => {
                 return <IndicatorRow obj={res} key={i} id_process={id_analysis}/>;
@@ -46,13 +61,26 @@ export default function Results(props){
                 <Row className="p-2">
                     <Col>
                         <Card>
-                            <Card.Header>Results</Card.Header>
+                            <Card.Header>Results download </Card.Header>
                             <Card.Body>
-                                <Card.Title>Analysis: {id_analysis}</Card.Title>
-                                <Card.Subtitle>Results List:</Card.Subtitle>
+                                <Card.Subtitle>List of indicators:</Card.Subtitle>
                                 <ListGroup as="ol" numbered>
-                                    {DataElements()}
+                                    {DownloadElements()}
                                 </ListGroup>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                </Row>
+            </Container>
+            <Container fluid="md text-start">
+                <Row className="p-2">
+                    <Col>
+                        <Card>
+                            <Card.Header>Results graphs</Card.Header>
+                            <Card.Body>
+                                <Container>
+                                        {chartElements()}
+                                </Container>
                             </Card.Body>
                         </Card>
                     </Col>

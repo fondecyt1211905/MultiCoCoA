@@ -7,6 +7,8 @@ import utils.config as config
 import pandas as pd
 conf = config.CONFIG
 
+from controllers.drawtodf import get_df, concat_df_apm, process_data_head
+
 def create_indicator_measure(indicator_name):
     if request.method == "POST":
         # validar key
@@ -62,16 +64,9 @@ def get_indicator_measure(indicator_name, id_analysis):
 def download_indicator_measure_csv(indicator_name, id_analysis):
     if request.method == "GET":
         # establecemos la conexión con la base de datos MongoDB
-        db = directdb.connect()
-        indicator = db[indicator_name]
-        results = indicator.find({"id_analysis": id_analysis})
-        documents=list(results)
-        df = pd.DataFrame(documents)
-        df_measures = df["measures"]
-        df = df.drop(columns=['measures'])
-        df_measures = pd.DataFrame(df_measures.to_list())
-        df = pd.concat([df, df_measures], axis=1)
-        df = df.drop(columns=['_id'])
+        df = get_df(indicator_name, id_analysis)
+        if indicator_name == "video_output":
+            df = process_data_head(df)
         csv = df.to_csv(index=False, sep=';')
         response = make_response(csv)
         response.headers.set('Content-Type', 'text/csv')
