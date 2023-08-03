@@ -6,13 +6,15 @@ import os, wave, cv2
 def create_activity():
     if request.method == "POST":
         activities = Activity.objects()
-        name = request.form["activities"]
+        name = str(request.form["name"])
+        numParticipants = int(request.form["numParticipants"])
         if not name in activities:
             #crear actividad
-            activity = Activity.objects.create(name=name)
+            activity = Activity.objects.create(name=name, numParticipants=numParticipants)
+            print(os.getcwd())
             id=str(activity.id)
             #crear carpeta con el id de la actividad
-            os.mkdir(os.path.join(os.getcwd(),"data", id))
+            os.makedirs(os.path.join(os.getcwd(),"data", id))
             #guardar archivos en la carpeta
             file_video = None
             file_audio = None

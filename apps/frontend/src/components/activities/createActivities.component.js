@@ -15,6 +15,7 @@ import ActivityService from "../../services/activities.service";
 
 export default function CreateActivities() {
   const [name, setName] = useState("");
+  const [numParticipants, setNumParticipants] = useState("");
   const [filea, setFilea] = useState(undefined);
   const [filev, setFilev] = useState(undefined);
   const [alert, setAlert] = useState({
@@ -27,6 +28,10 @@ export default function CreateActivities() {
 
   const handleText = (event) => {
     setName(event.target.value);
+  };
+
+  const handlenumParticipants = (event) => {
+    setNumParticipants(event.target.value);
   };
 
   const handleFileA = (event) => {
@@ -47,8 +52,8 @@ export default function CreateActivities() {
     let formData = new FormData();
     formData.append("file_audio", filea);
     formData.append("file_video", filev);
-    formData.append("activities", name);
-
+    formData.append("name", name);
+    formData.append("numParticipants", numParticipants);
     ActivityService.create(formData)
       .then((result) => {
         setAlert({
@@ -100,6 +105,16 @@ export default function CreateActivities() {
                         value={name}
                         onChange={handleText}
                         placeholder="Name"
+                      ></Form.Control>
+                    </FormGroup>
+                    <FormGroup className="p-2">
+                      <Form.Control
+                        type="number"
+                        value={numParticipants}
+                        onChange={handlenumParticipants}
+                        placeholder="Number of participants"
+                        min="2"
+                        max="6"
                       ></Form.Control>
                     </FormGroup>
                     <FormGroup className="p-2">

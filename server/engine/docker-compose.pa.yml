@@ -4,7 +4,7 @@ services:
     container_name: 8to6wav
     build:
       context: .
-      dockerfile: ./pipelineaudio/8to6wav/Dockerfile
+      dockerfile: ./audioPipeline/8to6wav/Dockerfile
     networks:
         - red-internal
     external_links:
@@ -15,7 +15,7 @@ services:
     container_name: vad
     build:
       context: .
-      dockerfile: ./pipelineaudio/vad/Dockerfile
+      dockerfile: ./audioPipeline/vad/Dockerfile
     networks:
         - red-internal
     external_links:
@@ -27,7 +27,7 @@ services:
     container_name: doa
     build:
       context: .
-      dockerfile: ./pipelineaudio/doa/Dockerfile
+      dockerfile: ./audioPipeline/doa/Dockerfile
     networks:
         - red-internal
     external_links:
@@ -39,7 +39,7 @@ services:
     container_name: filter-doa
     build:
       context: .
-      dockerfile: ./pipelineaudio/filter-doa/Dockerfile
+      dockerfile: ./audioPipeline/filter-doa/Dockerfile
     networks:
         - red-internal
     external_links:
@@ -51,7 +51,7 @@ services:
     container_name: segmentator
     build:
       context: .
-      dockerfile: ./pipelineaudio/segmentator/Dockerfile
+      dockerfile: ./audioPipeline/segmentator/Dockerfile
     networks:
         - red-internal
     external_links:
@@ -63,7 +63,7 @@ services:
     container_name: transcriptor
     build:
       context: .
-      dockerfile: ./pipelineaudio/transcriptor/Dockerfile
+      dockerfile: ./audioPipeline/transcriptor/Dockerfile
     networks:
         - red-internal
     external_links:
@@ -75,7 +75,7 @@ services:
     container_name: nlp
     build:
       context: .
-      dockerfile: ./pipelineaudio/nlp/Dockerfile
+      dockerfile: ./audioPipeline/nlp/Dockerfile
     networks:
         - red-internal
     external_links:
@@ -87,7 +87,7 @@ services:
     container_name: apm
     build:
       context: .
-      dockerfile: ./pipelineaudio/apm/Dockerfile
+      dockerfile: ./audioPipeline/apm/Dockerfile
     networks:
         - red-internal
     external_links:

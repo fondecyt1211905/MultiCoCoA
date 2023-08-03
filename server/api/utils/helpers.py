@@ -35,8 +35,9 @@ def is_save(menssage):
         return False
 
 def menssage(
-        name, 
-        id_device, 
+        name,
+        id_device,
+        numUsers,
         tipo, 
         fps=None,
         sampwidth=None, 
@@ -50,6 +51,7 @@ def menssage(
     msg = {
         "name": name,
         "id_device": id_device,
+        "numUsers": numUsers,
         "type": tipo,
     }
     if fps != None:

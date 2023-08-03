@@ -7,24 +7,11 @@ CONFIG = {
 
     # Connection with mongoDB
     "mongo_host": str(os.getenv("MONGO_HOST", default="localhost")),
-    "mongo_port": int(os.getenv("MONGO_PORT", default=27017)),
+    "mongo_port": int(os.getenv("MONGO_PORT", default=27018)),
     "mongo_db": str(os.getenv("MONGO_DB", default="virtualDevice")),
 
     # Connection with api
-    "host_backend": str(os.getenv("HOST_BACKEND", default="mmla-api")),
-
-    # Define config system pipeline audio
-    "pa_name": str(os.getenv("PA_NAME", default="VirtualMic")),
-    "pa_format_byte": str(os.getenv("PA_FORMAT", default="ISO-8859-1")),
-    "pa_chunk": int(os.getenv("PA_CHUNK", default=100)),
-    "pa_vad_mode": int(os.getenv("PA_VAD_MODE", default=1)),
-    "pa_doa_chunks": int(os.getenv("PA_DOA_CHUNKS", default=15)),
-    "pa_doa_chunks_s": int(os.getenv("PA_DOA_CHUNKS_S", default=5)),
-    "pa_filter_doa_chunks": int(os.getenv("PA_FILTER_DOA_CHUNKS", default=5)),
-
-    # Define config system pipeline video
-    "pv_name": str(os.getenv("PV_NAME", default="VirtualCam")),
-    "pv_format_byte": str(os.getenv("PV_FORMAT", default="ISO-8859-1")),
+    "host_backend": str(os.getenv("HOST_BACKEND", default="localhost:3001")),
 
     # Connection with rabbitMQ
     "rabbitmq_host": str(os.getenv("RABBITMQ_HOST", default="localhost")),
@@ -33,51 +20,34 @@ CONFIG = {
     "rabbitmq_password": str(os.getenv("RABBITMQ_PASSWORD", default='guest')),
     "rabbitmq_timeout": int(os.getenv("RABBITMQ_TIMEOUT", default=10)),
 
-    # Define type exchange
-    "type_exchange_direct": str(os.getenv("TYPE_EXCHANGE_DIRECT", default="direct")),
-    "type_exchange_fanout": str(os.getenv("TYPE_EXCHANGE_FANOUT", default="fanout")),
+    #config acousticProsodicFeatures
+    "apf_in_ex": "Exch_apm_out",
+    "apf_in_ex_type": "fanout",
+    "apf_in_q": "Q_apm_db",
+    "apf_name_indicator": "Acoustic-Prosodic-Features",
 
-    # Define Exchange
-    "Exch_analysis": "Exch_analysis",
-    
-    "Exch_in_8to6": "Exch_in_8to6",
-    "Exch_in_vad": "Exch_in_vad",
-    "Exch_in_doa": "Exch_in_doa",
-    "Exch_in_filter_doa": "Exch_in_filter_doa",
-    "Exch_in_nlp": "Exch_in_nlp",
-    "Exch_filter_doa_out": "Exch_filter_doa_out",
-    "Exch_segmentator_out": "Exch_segmentator_out",
-    "Exch_apm_out": "Exch_apm_out",
-    "Exch_nlp_out": "Exch_nlp_out",
-    
-    "Exch_in_userr": "Exch_in_userr",
-    "Exch_in_facedirection": "Exch_in_facedirection",
-    "Exch_in_lookingdirection": "Exch_in_lookingdirection",
-    "Exch_video_out": "Exch_video_out","Exch_in_userr": "Exch_in_userr",
-    
-    # name queue audio
-    "Q_audio": "Queue_audio",
-    "Q_8to6": "Queue_8to6",
-    "Q_vad": "Queue_vad",
-    "Q_doa": "Queue_doa",
-    "Q_filter_doa": "Queue_filter_doa",
-    "Q_segmentator": "Queue_segmentator",
-    "Q_apm": "Queue_apm",
-    "Q_transcriptor": "Queue_transcriptor",
-    "Q_nlp": "Queue_nlp",
+    #config audioSegment
+    "seg_in_ex": "Exch_segmentator_out",
+    "seg_in_ex_type": "fanout",
+    "seg_in_q": "Q_segmentator_db",
+    "seg_name_indicator": "Audio-Segmentation",
 
-    # name queue video
-    "Q_video": "Queue_video",
-    "Q_userR": "Queue_in_userR",
-    "Q_facedirection": "Queue_facedirection",
-    "Q_lookingdirection": "Queue_lookingdirection",
-    "Q_video_out": "Queue_video_out",
+    #config vadDoaFeatures
+    "vdf_in_ex": "Exch_filter_doa_out",
+    "vdf_in_ex_type": "fanout",
+    "vdf_in_q": "Q_vad_doa_db",
+    "vdf_name_indicator": "VAD-DOA-Features",
 
-    # name queue output
-    "Q_apm_db": "Queue_apm_db",
-    "Q_nlp_db": "Queue_nlp_db",
-    "Q_segmentator_db": "Queue_segmentator_db",
-    "Q_vad_doa_db": "Queue_vad_doa_db",
-    "Q_video_db": "Queue_video_db",
+    #config HeadSightFeatures
+    "hsf_in_ex": "Exch_video_out",
+    "hsf_in_ex_type": "fanout",
+    "hsf_in_q": "Queue_video_out",
+    "hsf_name_indicator": "HeadSight-Features",
+
+    #config NaturalLanguageFeatures
+    "nlf_in_ex": "Exch_nlp_out",
+    "nlf_in_ex_type": "fanout",
+    "nlf_in_q": "Q_nlp_db",
+    "nlf_name_indicator": "Natural-Language-Features",
 }
 

@@ -25,7 +25,7 @@ def validate_id_analysis(id_analysis):
 
 def get_chart_segmentation(id_analysis):
     if request.method == "GET":
-        indicator_name = "segmentation"
+        indicator_name = "Audio-Segmentation"
         analysis = validate_id_analysis(id_analysis)
 
         if analysis is None:
@@ -35,28 +35,33 @@ def get_chart_segmentation(id_analysis):
             df = get_df(indicator_name, id_analysis)
             
             fig, ax = plt.subplots(figsize=(12,3))
-            for i in range(0,6):
+            labelUser = df['active_voice'].dropna().unique()
+            maxvalue = labelUser.max()
+            for i, user in enumerate(labelUser):
+                print(i, user)
                 t_df = df.loc[df["active_voice"] == i + 1]
                 ax.broken_barh([(x,y) for x,y in zip(t_df['start'],t_df['speaking_time'])], (i+0.5, 1), facecolors=listcolor[i])
             ax.set_title('Segments of spoken interventions')
             ax.set_ylabel('Speaker')
-            ax.set_ylim([0.5,6.5])
+            ax.set_ylim([0.5,maxvalue+0.5])
+            #definir numero de tick
+            ax.set_yticks(np.arange(1, maxvalue+1, 1))
+
             ax.set_xlabel('Time (s)')
 
             img_bytes = io.BytesIO()
             fig.savefig(img_bytes, bbox_inches='tight')
             img_bytes.seek(0)
             fig.clf()
+            return send_file(img_bytes, mimetype='image/png')
         else:
             return jsonify({'message': 'Indicator not found'}), 404
-        
-        return send_file(img_bytes, mimetype='image/png')
     else:
         return jsonify({'message': 'Bad request, code 3'}), 400
 
 def get_chart_vocal_activity(id_analysis):
     if request.method == "GET":
-        indicator_name = "vad-doa"
+        indicator_name = "VAD-DOA-Features"
         analysis = validate_id_analysis(id_analysis)
         if analysis is None:
             return jsonify({'message': 'Bad request, code 2'}), 400
@@ -64,7 +69,7 @@ def get_chart_vocal_activity(id_analysis):
             df = get_df(indicator_name, id_analysis)
 
             fig, ax = plt.subplots(figsize=(12,3))
-            df = df.loc[df['speech_count'] > 10]
+            df = df.loc[df['speech_count'] > 5]
             ax.scatter(df["start"], df["direction"], 0.5, color=listcolor2[1])
             ax.set_title('Direction of arrival of the sound source')
             ax.set_ylabel('Direction (degree)')
@@ -75,14 +80,16 @@ def get_chart_vocal_activity(id_analysis):
             fig.savefig(img_bytes, bbox_inches='tight')
             img_bytes.seek(0)
             fig.clf()
-        return send_file(img_bytes, mimetype='image/png')
+            return send_file(img_bytes, mimetype='image/png')
+        else:
+            return jsonify({'message': 'Indicator not found'}), 404
     else:
         return jsonify({'message': 'Bad request, code 3'}), 400
 
 def get_chart_apm(id_analysis):
     if request.method == "GET":
-        indicator_name = "apm"
-        indicator_name2 = "segmentation"
+        indicator_name = "Acoustic-Prosodic-Features"
+        indicator_name2 = "Audio-Segmentation"
         analysis = validate_id_analysis(id_analysis)
         if analysis is None:
             return jsonify({'message': 'Bad request, code 2'}), 400
@@ -94,27 +101,17 @@ def get_chart_apm(id_analysis):
 
             F0final_sma_amean = np.unique(df['F0final_sma_amean'].values)
             fig, ax = plt.subplots(figsize=(12,3))
-            # ax2 = ax.twinx()
-            # for i in range(0,6):
-            #     t_df2 = df.loc[df["active_voice"] == i+1]
-            #     ax.broken_barh([(x,y) for x,y in zip(t_df2['start'],t_df2['speaking_time'])], (i+0.5, 1), facecolors=listcolor[i])
-            # for i in F0final_sma_amean:
-            #     t_df = df.loc[(df["F0final_sma_amean"] ==  i) & (df["active_voice"] != None)]
-            #     ax2.broken_barh([(x,y) for x,y in zip(t_df['start'],t_df['speaking_time'])], (i, 1), facecolors=listcolor2[0])
-            for j in range(0,6):
+            labelUser = df2['active_voice'].dropna().unique()
+            for j in labelUser:
                 for i in F0final_sma_amean:
-                    t_df = df.loc[(df["F0final_sma_amean"] ==  i) & (df["active_voice"] == j+1)]
-                    ax.broken_barh([(x,y) for x,y in zip(t_df['start'],t_df['speaking_time'])], (i, 3), facecolors=listcolor[j])
+                    t_df = df.loc[(df["F0final_sma_amean"] ==  i) & (df["active_voice"] == int(j)+1)]
+                    ax.broken_barh([(x,y) for x,y in zip(t_df['start'],t_df['speaking_time'])], (i, 3), facecolors=listcolor[int(j)])
             ax.set_title('Segments of spoken interventions in contrast to Fundamental frequency mean')
             ax.set_ylabel('Fundamental frequency')
             # ax.set_ylabel('Speaker')
             # ax.set_ylim([0.5,6.5])
-            ax.plot([], [], color=listcolor[0], label='User 1')
-            ax.plot([], [], color=listcolor[1], label='User 2')
-            ax.plot([], [], color=listcolor[2], label='User 3')
-            ax.plot([], [], color=listcolor[3], label='User 4')
-            ax.plot([], [], color=listcolor[4], label='User 5')
-            ax.plot([], [], color=listcolor[5], label='User 6')
+            for i in labelUser:
+                ax.plot([], [], color=listcolor[int(i)], label=f'User {int(i)+1}')
             ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 
             # ax.plot([], [], color=listcolor2[0], label='mean')
@@ -124,28 +121,36 @@ def get_chart_apm(id_analysis):
             fig.savefig(img_bytes, bbox_inches='tight')
             img_bytes.seek(0)
             fig.clf()
-        return send_file(img_bytes, mimetype='image/png')
+            return send_file(img_bytes, mimetype='image/png')
+        else:
+            return jsonify({'message': 'Indicator not found'}), 404
     else:
         return jsonify({'message': 'Bad request, code 3'}), 400
 
 def get_chart_head_sight(id_analysis):
     if request.method == "GET":
-        indicator_name = "head_sight"
+        indicator_name = "HeadSight-Features"
         analysis = validate_id_analysis(id_analysis)
         if analysis is None:
             return jsonify({'message': 'Bad request, code 2'}), 400
         if indicator_name in analysis.indicators:
             df = get_df(indicator_name, id_analysis)
             df = process_data_head(df)
-            
+            num_user = 0
+            for i in range(1,7):
+                try:
+                    a = df[i]
+                    num_user += 1
+                except KeyError:
+                    break
             fig, ax = plt.subplots(figsize=(12,3))
             for i in df.index:
-                for j in range(1,7):
+                for j in range(1,num_user+1):
                     if df[j][i] == True:
-                        aux = df.loc[df[j] == True, ['start',f'{j}-x',f'{j}-y',f'{j}-w',f'{j}-h',f'{j}-is_confirmed',f'{j}-is_tentative',f'{j}-distance',f'{j}-user_min_distance']]
-                        aux.columns = ['start','x','y','w','h','is_confirmed','is_tentative','distance','user_min_distance']
+                        aux = df.loc[df[j] == True, ['start',f'{j}-x',f'{j}-y',f'{j}-w',f'{j}-h',f'{j}-is_confirmed',f'{j}-is_tentative',f'{j}-distanceToObservedUser',f'{j}-ObservedUser']]
+                        aux.columns = ['start','x','y','w','h','is_confirmed','is_tentative','distanceToObservedUser','ObservedUser']
                         try:
-                            observed = int(aux["user_min_distance"][i])
+                            observed = int(aux["ObservedUser"][i])
                         except ValueError:
                             continue
                         ax.broken_barh([(aux["start"][i], 0.2)], (j-0.5, 1), facecolors=listcolor[observed-1])
@@ -157,25 +162,23 @@ def get_chart_head_sight(id_analysis):
             #set y label
             ax.set_ylabel('Observer')
             # set legend
-            ax.plot([], [], color=listcolor[0], label='User 1')
-            ax.plot([], [], color=listcolor[1], label='User 2')
-            ax.plot([], [], color=listcolor[2], label='User 3')
-            ax.plot([], [], color=listcolor[3], label='User 4')
-            ax.plot([], [], color=listcolor[4], label='User 5')
-            ax.plot([], [], color=listcolor[5], label='User 6')
+            for i in range(0,num_user):
+                ax.plot([], [], color=listcolor[int(i)], label=f'User {int(i+1)}')
             ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 
             img_bytes = io.BytesIO()
             fig.savefig(img_bytes, bbox_inches='tight')
             img_bytes.seek(0)
             fig.clf()
-        return send_file(img_bytes, mimetype='image/png')
+            return send_file(img_bytes, mimetype='image/png')
+        else:
+            return jsonify({'message': 'Indicator not found'}), 404
     else:
         return jsonify({'message': 'Bad request, code 3'}), 400
 
 def get_chart_graph(id_analysis):
     if request.method == "GET":
-        indicator_name = "segmentation"
+        indicator_name = "Audio-Segmentation"
         analysis = validate_id_analysis(id_analysis)
         if analysis is None:
             return jsonify({'message': 'Bad request, code 2'}), 400
@@ -241,6 +244,8 @@ def get_chart_graph(id_analysis):
             fig.savefig(img_bytes, bbox_inches='tight')
             img_bytes.seek(0)
             fig.clf()
-        return send_file(img_bytes, mimetype='image/png')
+            return send_file(img_bytes, mimetype='image/png')
+        else:
+            return jsonify({'message': 'Indicator not found'}), 404
     else:
         return jsonify({'message': 'Bad request, code 3'}), 400

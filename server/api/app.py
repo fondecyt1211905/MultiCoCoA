@@ -1,5 +1,4 @@
-from flask import Flask, send_file
-from PIL import Image
+from flask import Flask
 import utils.config as config
 from flask_cors import CORS
 from flasgger import Swagger
@@ -13,6 +12,9 @@ from controllers.indicator import create_indicator_measure, get_indicator_measur
 from controllers.charts import get_chart_segmentation, get_chart_vocal_activity, get_chart_apm, get_chart_head_sight, get_chart_graph
 # config
 data = config.CONFIG
+
+import os
+print(os.getcwd())
 
 #async_mode = 'eventlet'
 app = Flask(__name__)

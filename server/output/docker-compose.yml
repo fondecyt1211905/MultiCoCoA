@@ -1,10 +1,10 @@
 version: "3"
 services:
-  apm_db:
-    container_name: apm_db
+  acousticprosodicfeatures:
+    container_name: AcousticProsodicFeatures
     build:
       context: .
-      dockerfile: ./apm_db/Dockerfile
+      dockerfile: ./AcousticProsodicFeatures/Dockerfile
     networks:
         - red-internal
     external_links:
@@ -14,11 +14,11 @@ services:
         - RABBITMQ_HOST=mmla-rabbitmq
         - HOST_BACKEND=mmla-api
   
-  vad-doa_db:
-    container_name: vad-doa_db
+  vaddoafeatures:
+    container_name: VadDoaFeatures
     build:
       context: .
-      dockerfile: ./vad-doa_db/Dockerfile
+      dockerfile: ./VadDoaFeatures/Dockerfile
     networks:
         - red-internal
     external_links:
@@ -28,11 +28,11 @@ services:
         - RABBITMQ_HOST=mmla-rabbitmq
         - HOST_BACKEND=mmla-api
 
-  nlp_db:
-    container_name: nlp_db
+  naturallanguagefeatures:
+    container_name: NaturalLanguageFeatures
     build:
       context: .
-      dockerfile: ./nlp_db/Dockerfile
+      dockerfile: ./NaturalLanguageFeatures/Dockerfile
     networks:
         - red-internal
     external_links:
@@ -42,11 +42,11 @@ services:
         - RABBITMQ_HOST=mmla-rabbitmq
         - HOST_BACKEND=mmla-api
       
-  segmentation_db:
-    container_name: segmentation_db
+  audiosegment:
+    container_name: AudioSegment
     build:
       context: .
-      dockerfile: ./segmentation_db/Dockerfile
+      dockerfile: ./AudioSegment/Dockerfile
     networks:
         - red-internal
     external_links:
@@ -56,11 +56,11 @@ services:
         - RABBITMQ_HOST=mmla-rabbitmq
         - HOST_BACKEND=mmla-api
 
-  video_db:
-    container_name: video_db
+  headsightfeatures:
+    container_name: HeadSightFeatures
     build:
       context: .
-      dockerfile: ./video_db/Dockerfile
+      dockerfile: ./HeadSightFeatures/Dockerfile
     networks:
         - red-internal
     external_links:

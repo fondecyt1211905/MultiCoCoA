@@ -65,7 +65,7 @@ def download_indicator_measure_csv(indicator_name, id_analysis):
     if request.method == "GET":
         # establecemos la conexión con la base de datos MongoDB
         df = get_df(indicator_name, id_analysis)
-        if indicator_name == "video_output":
+        if indicator_name == "HeadSight-Features":
             df = process_data_head(df)
         csv = df.to_csv(index=False, sep=';')
         response = make_response(csv)

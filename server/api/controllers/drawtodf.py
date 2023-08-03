@@ -41,38 +41,38 @@ def process_data_head(df):
             df.loc[df.index == i, str(f"{j}-h")] = measure[j]['height']
             df.loc[df.index == i, str(f"{j}-is_confirmed")] = measure[j]['is_confirmed']
             df.loc[df.index == i, str(f"{j}-is_tentative")] = measure[j]['is_tentative']
-            df.loc[df.index == i, str(f"{j}-distance")] = measure[j]['distance']
-            df.loc[df.index == i, str(f"{j}-user_min_distance")] = measure[j]['user_min_distance']
-    try:
-        df["1-user_min_distance"] = df["1-user_min_distance"].astype(float)
-    except KeyError:
-        pass
-    try:
-        df["2-user_min_distance"] = df["2-user_min_distance"].astype(float)
-    except KeyError:
-        pass
-    try:
-        df["3-user_min_distance"] = df["3-user_min_distance"].astype(float)
-    except KeyError:
-        pass
-    try:
-        df["4-user_min_distance"] = df["4-user_min_distance"].astype(float)
-    except KeyError:
-        pass
-    try:
-        df["5-user_min_distance"] = df["5-user_min_distance"].astype(float)
-    except KeyError:
-        pass
-    try:
-        df["6-user_min_distance"] = df["6-user_min_distance"].astype(float)
-    except KeyError:
-        pass
-    try:
-        df["7-user_min_distance"] = df["7-user_min_distance"].astype(float)
-    except KeyError:
-        pass
-    try:
-        df["8-user_min_distance"] = df["8-user_min_distance"].astype(float)
-    except KeyError:
-        pass
+            df.loc[df.index == i, str(f"{j}-distanceToObservedUser")] = float(measure[j]['distance']) if measure[j]['distance'] is not None else None
+            df.loc[df.index == i, str(f"{j}-ObservedUser")] = float(measure[j]['user_min_distance']) if measure[j]['user_min_distance'] is not None else None
+    # try:
+    #     df["1-ObservedUser"] = df["1-ObservedUser"].astype(float)
+    # except KeyError:
+    #     pass
+    # try:
+    #     df["2-ObservedUser"] = df["2-ObservedUser"].astype(float)
+    # except KeyError:
+    #     pass
+    # try:
+    #     df["3-ObservedUser"] = df["3-ObservedUser"].astype(float)
+    # except KeyError:
+    #     pass
+    # try:
+    #     df["4-ObservedUser"] = df["4-ObservedUser"].astype(float)
+    # except KeyError:
+    #     pass
+    # try:
+    #     df["5-ObservedUser"] = df["5-ObservedUser"].astype(float)
+    # except KeyError:
+    #     pass
+    # try:
+    #     df["6-ObservedUser"] = df["6-ObservedUser"].astype(float)
+    # except KeyError:
+    #     pass
+    # try:
+    #     df["7-ObservedUser"] = df["7-ObservedUser"].astype(float)
+    # except KeyError:
+    #     pass
+    # try:
+    #     df["8-ObservedUser"] = df["8-ObservedUser"].astype(float)
+    # except KeyError:
+    #     pass
     return df

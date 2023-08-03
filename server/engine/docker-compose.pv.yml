@@ -5,7 +5,7 @@ services:
     container_name: userrecognition
     build:
       context: .
-      dockerfile: ./pipelinevideo/userrecognition/Dockerfile
+      dockerfile: ./videoPipeline/userrecognition/Dockerfile
     volumes:
       - deepface:/root/.deepface/weights/
     networks:
@@ -21,7 +21,7 @@ services:
     container_name: facedirection
     build:
       context: .
-      dockerfile: ./pipelinevideo/facedirection/Dockerfile
+      dockerfile: ./videoPipeline/facedirection/Dockerfile
     volumes:
       - deepface:/root/.deepface/weights/
     networks:
@@ -31,12 +31,12 @@ services:
     environment:
       - RABBITMQ_HOST=mmla-rabbitmq
 
-  # lookinghead
-  lookinghead:
-    container_name: lookinghead
+  # headsight
+  headsight:
+    container_name: headsight
     build:
       context: .
-      dockerfile: ./pipelinevideo/lookinghead/Dockerfile
+      dockerfile: ./videoPipeline/headsight/Dockerfile
     volumes:
       - deepface:/root/.deepface/weights/
     networks:
@@ -50,7 +50,7 @@ services:
   #   container_name: emotion
   #   build:
   #     context: .
-  #     dockerfile: ./pipelinevideo/emotion/Dockerfile
+  #     dockerfile: ./videoPipeline/emotion/Dockerfile
   #   volumes:
   #     - deepface:/root/.deepface/weights/
   #   networks:

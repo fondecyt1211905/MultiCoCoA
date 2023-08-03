@@ -16,9 +16,17 @@ It is a framework for multimodal analytics to facilitate data collection in coll
     ```
     docker network create mmla-network
     ```
-2. **Configuring Windows hosts**: Add `front.localhost` and `api.localhost` in your hosts file next to `localhost`..
+2. **Configuring Windows hosts**: Add `front.localhost` and `api.localhost` in your hosts file next to `localhost`.
 
 ## Deployment
+
+### Deploy proxy:
+
+```
+cd nginx
+docker-compose up -d
+cd ..
+```
 
 ### Deploy MongoDB and RabbitMQ databases:
 

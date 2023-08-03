@@ -11,6 +11,7 @@ class File(db.EmbeddedDocument):
 
 class Activity(db.Document):
     name = db.StringField(required=True, unique=True)
+    numParticipants = db.IntField(min_value=2, max_value=6)
     files = db.ListField(db.EmbeddedDocumentField(File))
 
 class Analysis(db.Document):

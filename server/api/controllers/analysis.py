@@ -22,7 +22,7 @@ def create_analysis():
         con, channel = helpers.connect(conf["rabbitmq_user"], conf["rabbitmq_password"], conf["rabbitmq_host"], conf["rabbitmq_port"], conf["rabbitmq_timeout"])
 
         # Declare
-        channel.exchange_declare(exchange=conf["Exch_analysis"], exchange_type=conf["type_exchange_direct"])
+        channel.exchange_declare(exchange=conf["api_exchange"], exchange_type=conf["api_exchange_type"])
         
         def message(id,filename):
             return {
@@ -33,9 +33,9 @@ def create_analysis():
         # Create queue
         for file in data["files"]:
             if file['type'].lower() == "audio":
-                channel.basic_publish(exchange=conf["Exch_analysis"], routing_key=conf["Q_audio"], body=json.dumps(message(id,file["filename"])))
+                channel.basic_publish(exchange=conf["api_exchange"], routing_key=conf["api_out_audio"], body=json.dumps(message(id,file["filename"])))
             if file['type'].lower() == "video":
-                channel.basic_publish(exchange=conf["Exch_analysis"], routing_key=conf["Q_video"], body=json.dumps(message(id,file["filename"])))
+                channel.basic_publish(exchange=conf["api_exchange"], routing_key=conf["api_out_video"], body=json.dumps(message(id,file["filename"])))
         
         con.close()
         analysis.save()

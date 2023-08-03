@@ -4,21 +4,16 @@ CONFIG = {
     "api_host": str(os.getenv("API_HOST", default="0.0.0.0")),
     "api_port": int(os.getenv("API_PORT", default=3001)),
     "api_debug": (os.getenv("API_MODE", default='True') == 'True'),
+    "api_exchange": "Exch_analysis",
+    "api_exchange_type": "direct",
+    "api_out_audio": "Queue_audio",
+    "api_out_video": "Queue_video2",
 
     # Connection with mongoDB
     "mongo_host": str(os.getenv("MONGO_HOST", default="localhost")),
     "mongo_port": int(os.getenv("MONGO_PORT", default=27018)),
     "mongo_db": str(os.getenv("MONGO_DB", default="virtualDevice")),
-
-    # Define config system pipeline audio
-    "pa_name": str(os.getenv("PA_NAME", default="VirtualMic")),
-    "pa_format_byte": str(os.getenv("PA_FORMAT", default="ISO-8859-1")),
-    "pa_chunk": int(os.getenv("PA_CHUNK", default=100)),
-
-    # Define config system pipeline video
-    "pv_name": str(os.getenv("PV_NAME", default="VirtualCam")),
-    "pv_format_byte": str(os.getenv("PV_FORMAT", default="ISO-8859-1")),
-
+    
     # Connection with rabbitMQ
     "rabbitmq_host": str(os.getenv("RABBITMQ_HOST", default="localhost")),
     "rabbitmq_port": str(os.getenv("RABBITMQ_PORT", default=5672)),
@@ -26,20 +21,22 @@ CONFIG = {
     "rabbitmq_password": str(os.getenv("RABBITMQ_PASSWORD", default='guest')),
     "rabbitmq_timeout": int(os.getenv("RABBITMQ_TIMEOUT", default=10)),
 
-    # Define type exchange
-    "type_exchange_direct": str(os.getenv("TYPE_EXCHANGE_DIRECT", default="direct")),
-    "type_exchange_fanout": str(os.getenv("TYPE_EXCHANGE_FANOUT", default="fanout")),
+    ## define config streamAudio
+    "sa_in_ex": "Exch_analysis",
+    "sa_in_ex_type": "direct",
+    "sa_in_q": "Queue_audio",
+    "sa_out_ex": "Exch_in_8to6",
+    "sa_out_q": "Queue_8to6",
+    "sa_chunk": 100,
+    "sa_name": "VirtualAudio",
+    "sa_format_byte": "ISO-8859-1",
 
-    # Define Exchange
-    "Exch_analysis": "Exch_analysis",
-    "Exch_in_8to6": "Exch_in_8to6",
-    "Exch_in_userr": "Exch_in_userr",
-    
-    # name queue audio
-    "Q_audio": "Queue_audio",
-    "Q_8to6": "Queue_8to6",
-
-    # name queue video
-    "Q_video": "Queue_video",
-    "Q_userR": "Queue_in_userR",
+    ## define config streamVideo
+    "sv_in_ex": "Exch_analysis",
+    "sv_in_ex_type": "direct",
+    "sv_in_q": "Queue_video2",
+    "sv_out_ex": "Exch_in_userR",
+    "sv_out_q": "Queue_in_userR",
+    "sv_name": "VirtualVideo",
+    "sv_format_byte": "ISO-8859-1",
 }

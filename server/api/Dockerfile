@@ -15,5 +15,4 @@ RUN pip install -r requirements.txt
 EXPOSE 80
 
 # Definir el comando para ejecutar la aplicación
-CMD ["sh", "-c", "python app.py & python virtualDeviceAudio.py & python virtualDeviceVideo.py"]
-#CMD ["python", "app.py", "&", "python", "virtualDeviceAudio.py", "&", "python", "virtualDeviceVideo.py"]
+CMD ["sh", "-c", "python app.py & python streamAudio.py & python streamVideo.py"]
