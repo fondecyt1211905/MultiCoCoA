@@ -61,7 +61,7 @@ Upon completion of these steps, you should have the entire system deployed and r
 
 ![Application architecture.](./img/frontend-backend.png "Application architecture.")
 
-## Uso
+## Usage
 
 Once the system is deployed, you can access it from your web browser by entering the URL `front.localhost`.
 
